@@ -1,0 +1,30 @@
+# version: '3.8'
+
+services:
+  web-service: # NGINX web server service
+    image: nginx:stable-alpine
+    container_name: web-server
+    ports:
+      - "8000:80" # Map host port 8000 to container port 80
+    volumes:
+      - ./app:/var/www/html # Mount local 'app' directory to Nginx's web root
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - codebase # Nginx needs the PHP service to be running
+    networks:
+      - php-network
+
+  codebase: # PHP-FPM service
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: codebase
+    volumes:
+      - ./app:/var/www/html
+    networks:
+      - php-network
+
+networks:
+  php-network:
+    driver: bridge
+
