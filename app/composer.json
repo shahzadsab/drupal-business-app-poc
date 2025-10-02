@@ -21,6 +21,7 @@
         "drupal/core-recipe-unpack": "^11.2",
         "drupal/core-recommended": "^11.2",
         "drupal/token": "^1.16",
+        "drupal/views_slideshow": "^5.0",
         "drush/drush": "^13.6"
     },
     "conflict": {
