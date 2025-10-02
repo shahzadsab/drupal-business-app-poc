@@ -24,7 +24,24 @@ services:
     networks:
       - php-network
 
+  postgres-service:
+    image: postgres:17-alpine # Use a recent, recommended version
+    container_name: postgres
+    ports:
+      - "54320:5432"
+    environment:
+      - POSTGRES_DB=drupal_db
+      - POSTGRES_USER=drupal_user
+      - POSTGRES_PASSWORD=drupal_password
+    volumes:
+      # Persistent volume for the database data
+      - drupal-data:/var/lib/postgresql/data
+    networks:
+      - php-network
+
 networks:
   php-network:
     driver: bridge
 
+volumes:
+  drupal-data:
